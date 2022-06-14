@@ -1,0 +1,706 @@
+# Configuration changes to bring source (config-postSetup.gz) to target (config.ldif)
+# Comparison options:
+#   Ignore differences in configuration that is part of the topology registry
+#   Ignore differences on shared host
+#   Ignore differences by instance
+
+dsconfig set-trust-manager-provider-prop \
+    --provider-name 'Blind Trust'  \
+    --set enabled:true
+
+dsconfig create-local-db-index \
+    --backend-name userRoot  \
+    --index-name email  \
+    --set index-type:equality
+
+dsconfig create-local-db-index \
+    --backend-name userRoot  \
+    --index-name pf-oauth-client-id  \
+    --set index-type:equality  \
+    --set index-type:ordering  \
+    --set index-type:substring
+
+dsconfig create-local-db-index \
+    --backend-name userRoot  \
+    --index-name pf-oauth-client-last-modified  \
+    --set index-type:ordering
+
+dsconfig create-local-db-index \
+    --backend-name userRoot  \
+    --index-name pf-oauth-client-name  \
+    --set index-type:equality  \
+    --set index-type:ordering  \
+    --set index-type:substring
+
+dsconfig create-local-db-index \
+    --backend-name userRoot \
+    --index-name accessGrantGuid \
+    --set index-type:equality
+
+dsconfig create-local-db-index \
+    --backend-name userRoot \
+    --index-name accessGrantUniqueUserIdentifier \
+    --set index-type:equality
+
+dsconfig create-local-db-index \
+    --backend-name userRoot \
+    --index-name accessGrantHashedRefreshTokenValue \
+    --set index-type:equality
+
+dsconfig create-local-db-index \
+    --backend-name userRoot \
+    --index-name accessGrantClientId \
+    --set index-type:equality
+
+dsconfig create-local-db-index \
+    --backend-name userRoot \
+    --index-name accessGrantExpires \
+    --set index-type:ordering
+
+dsconfig create-scim-schema \
+    --schema-name urn:pingidentity:schemas:Group:1.0  \
+    --set 'description:Group schema'
+
+dsconfig create-scim-resource-type \
+    --type-name Groups  \
+    --type ldap-mapping  \
+    --set enabled:true  \
+    --set endpoint:Groups  \
+    --set structural-ldap-objectclass:userGroup  \
+    --set include-base-dn:ou=Groups,dc=greenwayhealth,dc=com  \
+    --set include-filter:(!(objectClass=ds-soft-delete-entry))  \
+    --set create-dn-pattern:cn={cn},ou=Groups,dc=greenwayhealth,dc=com  \
+    --set core-schema:urn:pingidentity:schemas:Group:1.0  \
+    --set required-schema-extension:urn:pingidentity:schemas:Group:1.0
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Groups  \
+    --mapping-name groupName  \
+    --set scim-resource-type-attribute:groupName  \
+    --set ldap-attribute:cn  \
+    --set searchable:true
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Groups  \
+    --mapping-name isActive  \
+    --set scim-resource-type-attribute:isActive  \
+    --set ldap-attribute:isActive
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Groups  \
+    --mapping-name memberUrl  \
+    --set scim-resource-type-attribute:memberUrl  \
+    --set ldap-attribute:memberUrl
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:Group:1.0  \
+    --attribute-name groupName  \
+    --set 'description:Ping scim group name'  \
+    --set required:true
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:Group:1.0  \
+    --attribute-name isActive  \
+    --set 'description:Ping scim isActive'  \
+    --set type:boolean  \
+    --set required:true
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:Group:1.0  \
+    --attribute-name memberUrl  \
+    --set 'description:Ping scim memberUrl'  \
+    --set required:true
+
+dsconfig create-scim-schema \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --set 'description:User schema'  \
+    --set 'display-name:User schema'
+
+dsconfig create-scim-resource-type \
+    --type-name Users  \
+    --type ldap-mapping  \
+    --set enabled:true  \
+    --set endpoint:Users  \
+    --set structural-ldap-objectclass:user  \
+    --set include-base-dn:ou=Users,dc=greenwayhealth,dc=com  \
+    --set include-filter:(!(objectClass=ds-soft-delete-entry))  \
+    --set create-dn-pattern:userName={userName},ou=Users,dc=greenwayhealth,dc=com  \
+    --set core-schema:urn:pingidentity:schemas:User:2.0  \
+    --set required-schema-extension:urn:pingidentity:schemas:User:2.0
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name cognitoId  \
+    --set scim-resource-type-attribute:cognitoId  \
+    --set ldap-attribute:cognitoId
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name email  \
+    --set scim-resource-type-attribute:email  \
+    --set ldap-attribute:email  \
+    --set searchable:true
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name familyName  \
+    --set scim-resource-type-attribute:familyName  \
+    --set ldap-attribute:familyName
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name mfaEnabled  \
+    --set scim-resource-type-attribute:mfaEnabled  \
+    --set ldap-attribute:mfaEnabled 
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name phoneNo  \
+    --set scim-resource-type-attribute:phoneNo  \
+    --set ldap-attribute:phoneNo 
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name gcsId  \
+    --set scim-resource-type-attribute:gcsId  \
+    --set ldap-attribute:gcsId
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name givenName  \
+    --set scim-resource-type-attribute:givenName  \
+    --set ldap-attribute:givenNames
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name gppId  \
+    --set scim-resource-type-attribute:gppId  \
+    --set ldap-attribute:gppId
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name isActive  \
+    --set scim-resource-type-attribute:isActive  \
+    --set ldap-attribute:isActive
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name isDeleted  \
+    --set scim-resource-type-attribute:isDeleted  \
+    --set ldap-attribute:isDeleted  \
+    --set searchable:true
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name userName  \
+    --set scim-resource-type-attribute:userName  \
+    --set ldap-attribute:userName  \
+    --set searchable:true
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name userPassword  \
+    --set scim-resource-type-attribute:userPassword  \
+    --set ldap-attribute:userPassword
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name userRole  \
+    --set scim-resource-type-attribute:userRole  \
+    --set ldap-attribute:userRole  \
+    --set searchable:true
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name workforceId  \
+    --set scim-resource-type-attribute:workforceId  \
+    --set ldap-attribute:workforceId
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name entryUUID  \
+    --set scim-resource-type-attribute:entryUUID  \
+    --set ldap-attribute:entryUUID  \
+    --set searchable:true
+
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name persona  \
+    --set scim-resource-type-attribute:persona  \
+    --set ldap-attribute:persona
+    
+dsconfig create-scim-attribute-mapping \
+    --type-name Users  \
+    --mapping-name status  \
+    --set scim-resource-type-attribute:status  \
+    --set ldap-attribute:status
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name persona  \
+    --set 'description:An attribute to differentiate an scim user'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name cognitoId  \
+    --set 'description:Ping scim user'"'"'s cognito Id'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name email  \
+    --set 'description:Ping scim user'"'"'s email'  \
+    --set required:true
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name familyName  \
+    --set 'description:Ping scim user'"'"'s family name'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name gcsId  \
+    --set 'description:Ping scim user'"'"'s gcs Id'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name givenName  \
+    --set 'description:Ping scim user'"'"'s given name'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name gppId  \
+    --set 'description:Ping scim user'"'"'s Gpp Id'  \
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name isActive  \
+    --set 'description:Ping scim user is Active'  \
+    --set type:boolean
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name mfaEnabled  \
+    --set 'description:MFA status of scim user'  \
+    --set type:boolean  \
+    --set required:true 
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name phoneNo  \
+    --set multi-valued:true 
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name isDeleted  \
+    --set 'description:Ping scim user deleted'  \
+    --set type:boolean
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name userName  \
+    --set 'description:Ping scim user'"'"'s name'  \
+    --set required:true
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name userPassword  \
+    --set 'description:ping scim user'"'"'s password'  \
+    --set required:true
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name userRole  \
+    --set 'description:Ping scim user role'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name workforceId  \
+    --set 'description:Ping scim user'"'"'s workforce Id'
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name entryUUID  \
+    --set case-exact:true 
+
+dsconfig create-scim-attribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name status  \
+    --set "description:Status for Onboarding user"  \
+
+dsconfig create-scim-subattribute \
+    --schema-name urn:pingidentity:schemas:User:2.0  \
+    --attribute-name entryUUID  \
+    --subattribute-name entryUUID  \
+    --set case-exact:true 
+
+dsconfig create-external-server \
+    --server-name pingfederate  \
+    --type http  \
+    --set base-url:https://${BASE_URL}  \
+    --set hostname-verification-method:allow-all  \
+    --set 'trust-manager-provider:Blind Trust'
+
+dsconfig create-external-server \
+    --server-name pingfederate2  \
+    --type http  \
+    --set base-url:https://${BASE_URL}
+
+dsconfig set-access-control-handler-prop \
+    --add 'global-aci:(target="ldap:///")(targetattr="*||+")(version 3.0; acl "access to user store data"; allow(all) userdn="ldap:///anyone";)'
+
+dsconfig create-access-token-validator \
+    --validator-name 'Ping Federate Client Credential Validator'  \
+    --type ping-federate  \
+    --set 'identity-mapper:Exact Match'  \
+    --set subject-claim-name:client_id  \
+    --set enabled:true  \
+    --set authorization-server:pingfederate  \
+    --set client-id:${CLIENT_ID}  \
+    --set client-secret:${CLIENT_SECRET}
+
+dsconfig create-access-token-validator \
+    --validator-name ping-federate-token-validator  \
+    --type ping-federate  \
+    --set enabled:false  \
+    --set evaluation-order-index:100  \
+    --set authorization-server:pingfederate  \
+    --set client-id:${CLIENT_ID}  \
+    --set client-secret:${CLIENT_SECRET}
+
+dsconfig set-http-servlet-extension-prop \
+    --extension-name SCIM2  \
+    --set 'access-token-validator:Ping Federate Client Credential Validator'
+
+dsconfig set-ldap-sdk-debug-logger-prop \
+    --add debug-type:asn1  \
+    --add debug-type:ldif  \
+    --add debug-type:monitor  \
+    --add debug-type:other
+
+dsconfig set-password-policy-prop \
+    --policy-name 'Default Password Policy'  \
+    --set default-password-storage-scheme:AES
+
+dsconfig create-failure-lockout-action \
+    --action-name SecurityServicesUserLockAccount  \
+    --type lock-account  \
+    --set 'description:Lock Security Services user accounts with too many authentication failures.'
+
+dsconfig create-password-policy \
+    --policy-name SecurityServicesUserPasswordPolicy  \
+    --set 'description:Password Policy for user'  \
+    --set password-attribute:userpassword  \
+    --set 'default-password-storage-scheme:Salted SHA-256'  \
+    --set 'password-validator:Character Set'  \
+    --set 'password-validator:Length-Based Password Validator'  \
+    --set 'bind-password-validator:Length-Based Password Validator'  \
+    --set password-history-count:2  \
+    --set 'password-history-duration:1 d'  \
+    --set 'min-password-age:1 m 20 s'  \
+    --set 'max-password-age:52 w 1 d'  \
+    --set 'password-expiration-warning-interval:12 w 6 d'  \
+    --set allow-expired-password-changes:true
+
+dsconfig set-password-policy-prop \
+    --policy-name SecurityServicesUserPasswordPolicy  \
+    --set force-change-on-add:false 
+
+dsconfig set-password-policy-prop \
+    --policy-name SecurityServicesUserPasswordPolicy  \
+    --remove "password-validator:Character Set" 
+
+dsconfig set-password-policy-prop \
+    --policy-name SecurityServicesUserPasswordPolicy  \
+    --set lockout-failure-count:5  \
+    --set ignore-duplicate-password-failures:false \
+    --set "lockout-duration:10 m" \
+    --add "bind-password-validator:Character Set" \
+    --set "failure-lockout-action:SecurityServicesUserLockAccount" 
+
+dsconfig create-password-policy \
+    --policy-name Test3  \
+    --set password-attribute:userpassword  \
+    --set 'default-password-storage-scheme:Salted SHA-256'  \
+    --set 'password-validator:Character Set'  \
+    --set 'password-validator:Length-Based Password Validator'
+
+dsconfig set-password-validator-prop \
+    --validator-name 'Character Set'  \
+    --add character-set:1:ZYXWVUTSRQPONMLKJIHGFEDCBA  \
+    --remove character-set:1:~!@#$%^&*()-_=+[]{}|;:,.<>/?  \
+    --add character-set:1:~!@#$%^&*()-_=+[]{}|;
+
+dsconfig set-password-validator-prop \
+    --validator-name 'Length-Based Password Validator'  \
+    --set min-password-length:14 \
+    --set max-password-length:64
+
+dsconfig create-password-validator \
+    --validator-name 'Regex validator Demo'  \
+    --type regular-expression  \
+    --set enabled:true  \
+    --set match-pattern:^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,10}$  \
+    --set match-behavior:require-match
+
+dsconfig create-password-validator \
+    --validator-name Test2  \
+    --type length-based  \
+    --set description:Test  \
+    --set enabled:true  \
+    --set max-password-length:10  \
+    --set min-password-length:5
+
+
+dsconfig create-root-dn-user \
+    --user-name ss-admin  \
+    --set alternate-bind-dn:cn=ss-admin  \
+    --set password<${ROOT_USER_PASSWORD_FILE}  \
+    --set user-id:ssadmin
+
+
+dsconfig set-root-dn-user-prop \
+    --user-name "Directory Manager"  \
+    --add "alternate-bind-dn:${ROOT_USER_DN}"
+
+dsconfig create-virtual-attribute \
+    --name SecurityServicesPasswordPolicy  \
+    --type user-defined  \
+    --set 'description:Security Services Password Policy'  \
+    --set enabled:true  \
+    --set attribute-type:ds-pwp-password-policy-dn  \
+    --set base-dn:ou=Users,dc=greenwayhealth,dc=com  \
+    --set 'value:cn=SecurityServicesUserPasswordPolicy,cn=Password Policies,cn=config'
+
+dsconfig create-plugin \
+    --plugin-name 'Email Unique Attribute'  \
+    --type unique-attribute  \
+    --set 'description:Email Unique Attribute'  \
+    --set enabled:false  \
+    --set type:email
+
+dsconfig set-connection-handler-prop \
+    --handler-name 'LDAP Connection Handler'  \
+    --set enabled:true
+
+dsconfig create-connection-criteria \
+    --criteria-name 'Soft Delete Connection Criteria'  \
+    --type simple  \
+    --set 'included-connection-handler:HTTPS Connection Handler'  \
+    --set 'included-connection-handler:LDAP Connection Handler'  \
+    --set 'included-connection-handler:LDAPS Connection Handler'  \
+    --set 'included-connection-handler:LDIF Connection Handler'  \
+    --set user-auth-type:internal  \
+    --set user-auth-type:sasl  \
+    --set user-auth-type:simple  \
+    --set 'included-user-base-dn:cn=Root DNs,cn=config'  \
+    --set 'included-user-base-dn:cn=Topology Admin Users,cn=topology,cn=config'
+
+dsconfig create-request-criteria \
+    --criteria-name 'Soft Delete - Delete Request Criteria'  \
+    --type simple  \
+    --set 'description:For Delete Requests'  \
+    --set operation-type:delete  \
+    --set operation-origin:external-request  \
+    --set operation-origin:internal-operation  \
+    --set 'connection-criteria:Soft Delete Connection Criteria'  \
+    --set included-target-entry-dn:ou=Clients,dc=greenwayhealth,dc=com  \
+    --set included-target-entry-dn:ou=Groups,dc=greenwayhealth,dc=com  \
+    --set included-target-entry-dn:ou=Users,dc=greenwayhealth,dc=com  \
+    --set target-bind-type:sasl  \
+    --set target-bind-type:simple
+
+dsconfig create-soft-delete-policy \
+    --policy-name soft-delete-policy  \
+    --set 'description:Soft delete a user'  \
+    --set 'auto-soft-delete-connection-criteria:Soft Delete Connection Criteria'
+
+dsconfig set-global-configuration-prop \
+    --set soft-delete-policy:soft-delete-policy
+
+# Configurations for Consent Service
+
+dsconfig create-local-db-index \
+  --backend-name userRoot \
+  --index-name ping-consent-subject \
+  --set index-type:equality
+
+dsconfig create-local-db-index \
+  --backend-name userRoot \
+  --index-name ping-consent-actor \
+  --set index-type:equality
+
+dsconfig create-local-db-index \
+  --backend-name userRoot \
+  --index-name ping-consent-collaborator \
+  --set index-type:equality
+
+dsconfig create-local-db-index \
+  --backend-name userRoot \
+  --index-name userName \
+  --set index-type:equality 
+
+# The below Idenity mapper for user name will be deleted later as it's replaced with unique user id (uuid)
+dsconfig create-identity-mapper \
+  --mapper-name "userName Identity Mapper" \
+  --type exact-match \
+  --set enabled:true \
+  --set match-attribute:userName \
+  --set match-base-dn:ou=users,dc=greenwayhealth,dc=com
+
+dsconfig create-identity-mapper \
+  --mapper-name "Security Services Identity Mapper" \
+  --type exact-match \
+  --set enabled:true \
+  --set match-attribute:entryUUID \
+  --set match-base-dn:ou=users,dc=greenwayhealth,dc=com
+
+dsconfig set-access-token-validator-prop \
+    --validator-name "Ping Federate Client Credential Validator"  \
+    --set "identity-mapper:Security Services Identity Mapper"  \
+    --set subject-claim-name:uuid
+
+dsconfig set-http-servlet-extension-prop \
+    --extension-name Consent \
+    --set basic-auth-enabled:true \
+    --set bearer-token-auth-enabled:true \
+    --set "identity-mapper:Security Services Identity Mapper" \
+    --set 'access-token-validator:Ping Federate Client Credential Validator'
+
+#
+# Configure an LDAP audit logger to record changes to Consent Service resources.
+#
+dsconfig create-request-criteria \
+  --criteria-name "Consent Request Criteria" \
+  --type simple \
+  --set "all-included-target-entry-filter:(|(objectClass=ds-cfg-consent-definition)(objectClass=ds-cfg-consent-definition-localization)(objectClass=ping-consent-record))"
+
+dsconfig create-log-publisher \
+  --publisher-name "Consent LDAP Audit Logger" \
+  --type file-based-audit \
+  --set "description:Records LDAP changes to consent resources" \
+  --set enabled:true \
+  --set "request-criteria:Consent Request Criteria" \
+  --set exclude-attribute:ds-auth-delivered-otp \
+  --set exclude-attribute:ds-auth-password-reset-token \
+  --set exclude-attribute:ds-auth-single-use-token \
+  --set exclude-attribute:ds-last-access-time \
+  --set exclude-attribute:ds-pwp-last-login-time \
+  --set exclude-attribute:ds-sequence-number \
+  --set exclude-attribute:ds-sync-hist \
+  --set include-instance-name:true \
+  --set include-requester-dn:true \
+  --set include-requester-ip-address:true \
+  --set log-file:logs/consent-audit \
+  --set "retention-policy:File Count Retention Policy" \
+  --set "rotation-policy:24 Hours Time Limit Rotation Policy" \
+  --set "rotation-policy:Size Limit Rotation Policy"
+
+#
+# Create a trace logger for observing, debugging, and auditing Consent Service
+# requests and responses.
+#
+dsconfig create-log-publisher \
+  --publisher-name "Consent Trace Logger" \
+  --type file-based-trace \
+  --set "description:Records Consent API operations" \
+  --set enabled:true \
+  --set consent-message-type:audit \
+  --set consent-message-type:consent-created \
+  --set consent-message-type:consent-deleted \
+  --set consent-message-type:consent-retrieved \
+  --set consent-message-type:consent-search \
+  --set consent-message-type:consent-updated \
+  --set consent-message-type:definition-created \
+  --set consent-message-type:definition-deleted \
+  --set consent-message-type:definition-retrieved \
+  --set consent-message-type:definition-search \
+  --set consent-message-type:definition-updated \
+  --set consent-message-type:error \
+  --set consent-message-type:localization-created \
+  --set consent-message-type:localization-deleted \
+  --set consent-message-type:localization-retrieved \
+  --set consent-message-type:localization-search \
+  --set consent-message-type:localization-updated \
+  --set 'exclude-path-pattern:/**/*.css' \
+  --set 'exclude-path-pattern:/**/*.eot' \
+  --set 'exclude-path-pattern:/**/*.gif' \
+  --set 'exclude-path-pattern:/**/*.ico' \
+  --set 'exclude-path-pattern:/**/*.jpg' \
+  --set 'exclude-path-pattern:/**/*.js' \
+  --set 'exclude-path-pattern:/**/*.png' \
+  --set 'exclude-path-pattern:/**/*.svg' \
+  --set 'exclude-path-pattern:/**/*.ttf' \
+  --set 'exclude-path-pattern:/**/*.woff' \
+  --set 'exclude-path-pattern:/**/*.woff2' \
+  --set 'exclude-path-pattern:/console/**' \
+  --set http-message-type:request \
+  --set http-message-type:response \
+  --set log-file:logs/consent-trace \
+  --set "retention-policy:File Count Retention Policy" \
+  --set "retention-policy:Free Disk Space Retention Policy" \
+  --set "rotation-policy:24 Hours Time Limit Rotation Policy" \
+  --set "rotation-policy:Size Limit Rotation Policy"
+
+#
+# Enable trace logger debug message types.
+#
+# Please note that debug message types may record sensitive information and
+# are not intended to be enabled in a production environment.
+#
+#dsconfig set-log-publisher-prop \
+#  --publisher-name "Consent Trace Logger" \
+#  --set debug-message-type:access-token-validator-processing \
+#  --set debug-message-type:access-token-validator-request-and-response \
+#  --set debug-message-type:http-full-request-and-response
+
+#
+# Enable verbose debug logging.
+#
+# The debug logger records diagnostic messages that can be of use to Ping
+# Identity support and engineering staff. It is not intended to be enabled for
+# day-to-day use.
+#
+#dsconfig create-debug-target --publisher-name "File-Based Debug Logger" \
+#  --target-name com.unboundid.directory.server.admin.api \
+#  --set debug-level:verbose \
+#  --set "description:Config API debugging"
+#dsconfig create-debug-target --publisher-name "File-Based Debug Logger" \
+#  --target-name com.unboundid.directory.server.extensions.consent \
+#  --set debug-level:verbose \
+#  --set "description:Consent Service debugging"
+#dsconfig create-debug-target --publisher-name "File-Based Debug Logger" \
+#  --target-name com.unboundid.directory.server.http \
+#  --set debug-level:verbose \
+#  --set "description:Shared HTTP services debugging"
+#dsconfig set-log-publisher-prop --publisher-name "File-Based Debug Logger" \
+#  --set enabled:true \
+#  --set default-debug-level:warning
+
+#
+# Restart the HTTPS Connection Handler.
+#
+# This is only necessary if certain configuration properties have been updated.
+# For example, if bearer token authentication is enabled for the Consent HTTP
+# Servlet Extension, then the connection handler must be restarted for the
+# change to take effect. Before that, any reference to the connection handler
+# must be removed
+#
+
+dsconfig set-connection-criteria-prop \
+    --criteria-name "Soft Delete Connection Criteria"  \
+    --remove "included-connection-handler:HTTPS Connection Handler"
+
+dsconfig set-connection-handler-prop \
+    --handler-name "HTTPS Connection Handler" \
+    --set enabled:false
+dsconfig set-connection-handler-prop \
+    --handler-name "HTTPS Connection Handler" \
+    --set enabled:true
+
+dsconfig set-connection-criteria-prop \
+    --criteria-name "Soft Delete Connection Criteria"  \
+    --add "included-connection-handler:HTTPS Connection Handler"
+
+#Added proxied auth previleges to root dn
+dsconfig set-root-dn-prop \
+    --add default-root-privilege-name:proxied-auth
