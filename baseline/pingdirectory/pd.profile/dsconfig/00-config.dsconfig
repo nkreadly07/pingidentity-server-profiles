@@ -8,9 +8,9 @@ dsconfig create-scim-resource-type \
     --set enabled:true  \
     --set endpoint:Groups  \
     --set structural-ldap-objectclass:userGroup  \
-    --set include-base-dn:ou=Groups,dc=greenwayhealth,dc=com  \
+    --set include-base-dn:ou=Groupsdc=example,dc=com  \
     --set include-filter:(!(objectClass=ds-soft-delete-entry))  \
-    --set create-dn-pattern:cn={cn},ou=Groups,dc=greenwayhealth,dc=com  \
+    --set create-dn-pattern:cn={cn},ou=Groupsdc=example,dc=com  \
     --set core-schema:urn:pingidentity:schemas:Group:1.0  \
     --set required-schema-extension:urn:pingidentity:schemas:Group:1.0
 
@@ -63,9 +63,9 @@ dsconfig create-scim-resource-type \
     --set enabled:true  \
     --set endpoint:Users  \
     --set structural-ldap-objectclass:user  \
-    --set include-base-dn:ou=Users,dc=greenwayhealth,dc=com  \
+    --set include-base-dn:ou=People,dc=example,dc=com  \
     --set include-filter:(!(objectClass=ds-soft-delete-entry))  \
-    --set create-dn-pattern:userName={userName},ou=Users,dc=greenwayhealth,dc=com  \
+    --set create-dn-pattern:userName={userName},ou=People,dc=example,dc=com  \
     --set core-schema:urn:pingidentity:schemas:User:2.0  \
     --set required-schema-extension:urn:pingidentity:schemas:User:2.0
 
