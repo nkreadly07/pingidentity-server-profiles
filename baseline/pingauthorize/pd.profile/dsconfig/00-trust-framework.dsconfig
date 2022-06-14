@@ -1,0 +1,2 @@
+dsconfig set-policy-decision-service-prop \
+--set trust-framework-version:v2
