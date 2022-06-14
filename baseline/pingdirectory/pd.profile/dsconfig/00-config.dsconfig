@@ -336,7 +336,7 @@ dsconfig create-scim-subattribute \
 dsconfig create-external-server \
     --server-name pingfederate  \
     --type http  \
-    --set base-url:https://${BASE_URL}  \
+    --set base-url:https://$${BASE_URL}  \
     --set hostname-verification-method:allow-all  \
     --set 'trust-manager-provider:Blind Trust'
 
