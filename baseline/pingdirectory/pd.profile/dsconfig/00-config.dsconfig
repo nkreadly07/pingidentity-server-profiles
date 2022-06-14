@@ -343,7 +343,7 @@ dsconfig create-external-server \
 dsconfig create-external-server \
     --server-name pingfederate2  \
     --type http  \
-    --set base-url:https://${BASE_URL}
+    --set base-url:https://$${BASE_URL}
 
 dsconfig set-access-control-handler-prop \
     --add 'global-aci:(target="ldap:///")(targetattr="*||+")(version 3.0; acl "access to user store data"; allow(all) userdn="ldap:///anyone";)'
@@ -355,8 +355,8 @@ dsconfig create-access-token-validator \
     --set subject-claim-name:client_id  \
     --set enabled:true  \
     --set authorization-server:pingfederate  \
-    --set client-id:${CLIENT_ID}  \
-    --set client-secret:${CLIENT_SECRET}
+    --set client-id:$${CLIENT_ID}  \
+    --set client-secret:$${CLIENT_SECRET}
 
 dsconfig create-access-token-validator \
     --validator-name ping-federate-token-validator  \
@@ -364,8 +364,8 @@ dsconfig create-access-token-validator \
     --set enabled:false  \
     --set evaluation-order-index:100  \
     --set authorization-server:pingfederate  \
-    --set client-id:${CLIENT_ID}  \
-    --set client-secret:${CLIENT_SECRET}
+    --set client-id:$${CLIENT_ID}  \
+    --set client-secret:$${CLIENT_SECRET}
 
 dsconfig set-http-servlet-extension-prop \
     --extension-name SCIM2  \
@@ -454,13 +454,13 @@ dsconfig create-password-validator \
 dsconfig create-root-dn-user \
     --user-name ss-admin  \
     --set alternate-bind-dn:cn=ss-admin  \
-    --set password<${ROOT_USER_PASSWORD_FILE}  \
+    --set password<$${ROOT_USER_PASSWORD_FILE}  \
     --set user-id:ssadmin
 
 
 dsconfig set-root-dn-user-prop \
     --user-name "Directory Manager"  \
-    --add "alternate-bind-dn:${ROOT_USER_DN}"
+    --add "alternate-bind-dn:$${ROOT_USER_DN}"
 
 dsconfig create-virtual-attribute \
     --name SecurityServicesPasswordPolicy  \
