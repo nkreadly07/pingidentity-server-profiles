@@ -1,3 +1,8 @@
+dsconfig create-scim-schema --schema-name urn:pingidentity:schemas:User:2.0 \
+--set "description:User schema" \
+--set "display-name:User schema"
+
+
 dsconfig create-scim-attribute \
     --schema-name urn:pingidentity:schemas:User:2.0  \
     --attribute-name smarthubId  \
