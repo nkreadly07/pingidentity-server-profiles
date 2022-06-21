@@ -7,14 +7,16 @@ dsconfig create-scim-attribute \
     --schema-name urn:pingidentity:schemas:User:2.0  \
     --attribute-name smarthubId  \
     --set "description:SmarthubId for user"  
-  
+
+dsconfig set-scim-attribute-mapping-prop \
+    --type-name Users  \
+    --mapping-name smarthubId  \
+    --set searchable:true
+    
 dsconfig create-scim-attribute-mapping \
     --type-name Users  \
     --mapping-name smarthubId  \
     --set scim-resource-type-attribute:smarthubId  \
     --set ldap-attribute:smarthubId
 
-dsconfig set-scim-attribute-mapping-prop \
-    --type-name Users  \
-    --mapping-name smarthubId  \
-    --set searchable:true
+
