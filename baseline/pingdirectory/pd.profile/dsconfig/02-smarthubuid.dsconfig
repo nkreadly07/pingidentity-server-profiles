@@ -8,15 +8,13 @@ dsconfig create-scim-attribute \
     --attribute-name smarthubId  \
     --set "description:SmarthubId for user"  
 
-dsconfig set-scim-attribute-mapping-prop \
-    --type-name Users  \
-    --mapping-name smarthubId  \
-    --set searchable:true
-    
 dsconfig create-scim-attribute-mapping \
-    --type-name Users  \
-    --mapping-name smarthubId  \
-    --set scim-resource-type-attribute:smarthubId  \
+    --type-name Users \
+    --mapping-name smarthubId \
+    --set scim-resource-type-attribute:smarthubId \
     --set ldap-attribute:smarthubId
 
-
+dsconfig set-scim-attribute-mapping-prop \
+    --type-name Users \
+    --mapping-name smarthubId \
+    --set searchable:true
