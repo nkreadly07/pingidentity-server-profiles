@@ -1,20 +1,35 @@
-#dsconfig create-scim-schema --schema-name urn:pingidentity:schemas:User:2.0 \
-#--set "description:User schema" \
-#--set "display-name:User schema"
+dsconfig create-scim-schema \
+--schema-name urn:pingidentity:schemas:Group:1.0 \
+--set "description:Group schema"
+
+dsconfig create-scim-schema \
+--schema-name urn:pingidentity:schemas:User:2.0 \
+--set "description:User schema" \
+--set "display-name:User schema"
 
 
-#dsconfig create-scim-attribute \
-#    --schema-name urn:pingidentity:schemas:User:2.0  \
-#    --attribute-name smarthubId  \
-#    --set "description:SmarthubId for user"  
+dsconfig create-scim-attribute --schema-name urn:pingidentity:schemas:User:2.0 \
+--attribute-name smarthubId \
+--set "description:SmarthubId for user"
 
-#dsconfig create-scim-attribute-mapping \
-#    --type-name Users \
-#    --mapping-name smarthubId \
-#    --set scim-resource-type-attribute:smarthubId \
-#    --set ldap-attribute:smarthubId
 
-#dsconfig set-scim-attribute-mapping-prop \
-#    --type-name Users \
-#    --mapping-name smarthubId \
-#    --set searchable:true
+dsconfig create-scim-resource-type \
+--type-name Users  \
+--type ldap-mapping  \
+--set enabled:true  \
+--set endpoint:Users  \
+--set schema-checking-option:allow-undefined-attributes  \
+--set structural-ldap-objectclass:person  \
+--set include-base-dn:ou=People,dc=example,dc=com  \
+--set 'include-filter:(!(objectClass=ds-soft-delete-entry))'  \
+--set include-operational-attribute:smarthubId  \
+--set "create-dn-pattern:userName={userName},ou=People,dc=example,dc=com"  \
+--set core-schema:urn:pingidentity:schemas:User:2.0  \
+--set required-schema-extension:urn:pingidentity:schemas:User:2.0 
+
+dsconfig create-scim-attribute-mapping \
+ --type-name Users \
+ --mapping-name smarthubId \
+ --set scim-resource-type-attribute:smarthubId \
+ --set ldap-attribute:smarthubId \
+ --set searchable:true
