@@ -1,7 +1,3 @@
-echo "Hello from the SmarthubID DSCONFG"!
-
-
-
 dsconfig create-scim-schema \
 --schema-name urn:pingidentity:schemas:Group:1.0 \
 --set "description:Group schema"
