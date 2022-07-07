@@ -54,9 +54,9 @@ dsconfig create-scim-attribute \
 --attribute-name type  \
 --set 'description:Ping type attribute to mimic workforce Id'
 
-# dsconfig create-scim-attribute-mapping \
-# --type-name Users  \
-# --mapping-name type  \
-# --set scim-resource-type-attribute:type  \
-# --set ldap-attribute:smarthubId \
-# --set searchable:true
+dsconfig create-scim-attribute-mapping \
+--type-name Users  \
+--mapping-name type  \
+--set scim-resource-type-attribute:type  \
+--set ldap-attribute:smarthubId \
+--set searchable:true
