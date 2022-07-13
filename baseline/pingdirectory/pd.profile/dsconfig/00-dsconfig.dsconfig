@@ -1,4 +1,3 @@
-dsconfig -n set-server-instance-prop --instance-name ${INSTANCE_NAME} --set cluster-name:ss-pingdirectory-cluster-${INSTANCE_NAME}
 
 dsconfig create-scim-schema \
 --schema-name urn:pingidentity:schemas:Group:1.0 \
