@@ -1,4 +1,4 @@
-#dsconfig set-server-instance-prop --instance-name pingdirectory-0.pingdirectory-cluster --remove cluster-name:cluster_pingdirectory-0.pingdirectory-cluster
+dsconfig -n set-server-instance-prop --instance-name ${INSTANCE_NAME} --set cluster-name:ss-pingdirectory-cluster-${INSTANCE_NAME}
 
 dsconfig create-scim-schema \
 --schema-name urn:pingidentity:schemas:Group:1.0 \
