@@ -1,1 +1,0 @@
-dsconfig -n set-server-instance-prop --instance-name ${INSTANCE_NAME} --set cluster-name:ss-pingdirectory-cluster
