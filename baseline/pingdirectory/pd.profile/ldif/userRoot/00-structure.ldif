@@ -46,12 +46,12 @@ objectClass: top
 objectClass: organizationalUnit
 ou: sessions
 
-dn: ou=domains,o=hpid
+dn: ou=domains,${USER_BASE_DN}
 objectClass: top
 objectClass: organizationalUnit
 ou: domains
 
-dn: ou=natanael,o=hpid
+dn: ou=natanael,${USER_BASE_DN}
 objectClass: top
 objectClass: organizationalUnit
 ou: domains
