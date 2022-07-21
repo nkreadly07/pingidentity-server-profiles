@@ -55,3 +55,8 @@ dn: ou=natanael,${USER_BASE_DN}
 objectClass: top
 objectClass: organizationalUnit
 ou: natanael
+
+dn: ou=sandstorm,${USER_BASE_DN}
+objectClass: top
+objectClass: organizationalUnit
+ou: sandstorm
