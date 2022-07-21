@@ -1,4 +1,4 @@
-dn: ${USER_BASE_DN}
+dn: ${ }
 objectClass: top
 objectClass: ${BASE_CLASS}
 ${BASE_ATTRIBUTE}: ${BASE_VALUE}
