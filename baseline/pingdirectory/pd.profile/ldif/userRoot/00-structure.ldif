@@ -54,4 +54,4 @@ ou: domains
 dn: ou=natanael,${USER_BASE_DN}
 objectClass: top
 objectClass: organizationalUnit
-ou: domains
+ou: natanael
