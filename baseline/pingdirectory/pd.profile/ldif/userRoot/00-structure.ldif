@@ -45,3 +45,13 @@ aci: (targetattr="*")(version 3.0; acl "Allow the pingfederate user to do everyt
 objectClass: top
 objectClass: organizationalUnit
 ou: sessions
+
+dn: ou=domains,o=hpid
+objectClass: top
+objectClass: organizationalUnit
+ou: domains
+
+dn: ou=natanael,o=hpid
+objectClass: top
+objectClass: organizationalUnit
+ou: domains
