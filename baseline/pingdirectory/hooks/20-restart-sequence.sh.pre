@@ -2,8 +2,6 @@
 
 test "${VERBOSE}" = "true" && set -x
 
-echo '!!!!!!Sleeping 1800!!!!!!'
-sleep 1800
 #########
 echo Hello from the baseline server profile 20-restart-sequence.sh.pre hook!
 echo "====> USER_BASE_DN=[${USER_BASE_DN}]"
