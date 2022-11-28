@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+sleep 300
 test "${VERBOSE}" = "true" && set -x
 
 #########
